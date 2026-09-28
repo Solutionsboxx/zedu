@@ -18,7 +18,7 @@ This project is a high-performance full-stack productivity workspace combining a
                               | Proxies /api and /docs
                               v
 +-----------------------------------------------------------+
-|               Python FastAPI Backend (Port 8000)          |
+|               Python FastAPI Backend (Port 8001)          |
 |  - ASGI Server (Uvicorn) with async routing               |
 |  - Pydantic v2 schemas for strict data validation         |
 |  - SQLite (WAL mode, foreign keys, cascades)              |
@@ -147,13 +147,13 @@ All endpoints are hosted with the `/api` prefix.
    ```
 2. **Start FastAPI standalone**:
    ```bash
-   python3 -m uvicorn backend.main:app --port 8000 --reload
+   python3 -m uvicorn backend.main:app --port 8001 --reload
    ```
 3. **Start Vite Dev Server**:
    ```bash
    npm run dev
    ```
-   *Vite automatically spawns the FastAPI process on port 8000 and proxies `/api` and `/docs` seamlessly.*
+   *Vite automatically spawns the FastAPI process on port 8001 and proxies `/api` and `/docs` seamlessly.*
 
 ### Automated Verification Checklist for Agents
 Before completing any task, ensure:

@@ -1,11 +1,3 @@
-import sys
-from pathlib import Path
-
-# Add locally installed python packages directory to sys.path
-_pkg_path = str(Path(__file__).resolve().parent.parent / ".python_packages")
-if _pkg_path not in sys.path:
-    sys.path.insert(0, _pkg_path)
-
 import json
 from contextlib import asynccontextmanager
 from typing import List

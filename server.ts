@@ -10,8 +10,8 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 // Spawn Python FastAPI backend process
-console.log('[FastAPI] Spawning Python FastAPI service on port 8000...');
-const fastApiProc = spawn('python3', ['-m', 'uvicorn', 'backend.main:app', '--host', '127.0.0.1', '--port', '8000'], {
+console.log('[FastAPI] Spawning Python FastAPI service on port 8001...');
+const fastApiProc = spawn('python3', ['-m', 'uvicorn', 'backend.main:app', '--host', '127.0.0.1', '--port', '8001'], {
   stdio: 'inherit',
 });
 
@@ -30,7 +30,7 @@ process.on('SIGTERM', cleanup);
 
 // Forward /api, /docs, /openapi.json to FastAPI using fetch/stream
 app.use(['/api', '/docs', '/openapi.json'], async (req, res) => {
-  const targetUrl = `http://127.0.0.1:8000${req.originalUrl}`;
+  const targetUrl = `http://127.0.0.1:8001${req.originalUrl}`;
   try {
     const headers: Record<string, string> = {};
     for (const [key, value] of Object.entries(req.headers)) {

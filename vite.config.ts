@@ -11,16 +11,12 @@ function fastApiPlugin(): Plugin {
     name: 'fastapi-backend',
     configureServer(server) {
       if (!pythonProc) {
-        console.log('[FastAPI] Launching Python FastAPI backend on port 8000...');
+        console.log('[FastAPI] Launching Python FastAPI backend on port 8001...');
         pythonProc = spawn(
           'python3',
-          ['-m', 'uvicorn', 'backend.main:app', '--host', '127.0.0.1', '--port', '8000'],
+          ['-m', 'uvicorn', 'backend.main:app', '--host', '127.0.0.1', '--port', '8001'],
           {
             stdio: 'inherit',
-            env: {
-              ...process.env,
-              PYTHONPATH: `${path.resolve(__dirname, '.python_packages')}:${process.env.PYTHONPATH || ''}`,
-            },
           }
         );
 
@@ -55,15 +51,15 @@ export default defineConfig(() => {
     server: {
       proxy: {
         '/api': {
-          target: 'http://127.0.0.1:8000',
+          target: 'http://127.0.0.1:8001',
           changeOrigin: true,
         },
         '/docs': {
-          target: 'http://127.0.0.1:8000',
+          target: 'http://127.0.0.1:8001',
           changeOrigin: true,
         },
         '/openapi.json': {
-          target: 'http://127.0.0.1:8000',
+          target: 'http://127.0.0.1:8001',
           changeOrigin: true,
         },
       },

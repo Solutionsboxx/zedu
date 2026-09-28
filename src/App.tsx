@@ -94,10 +94,10 @@ export default function App() {
       setNotes(notesData);
       setStats(statsData);
       setAvailableTags(tagsData);
-      setApiHealthy(true);
+      setApiHealthy(api.isBackendConnected());
     } catch (err: any) {
-      console.error('Failed to fetch from FastAPI backend:', err);
-      setApiHealthy(false);
+      console.error('Data load notice:', err);
+      setApiHealthy(api.isBackendConnected());
     } finally {
       setLoading(false);
     }
@@ -111,13 +111,13 @@ export default function App() {
   useEffect(() => {
     const checkHealth = async () => {
       try {
-        await api.getHealth();
-        setApiHealthy(true);
+        const res = await api.getHealth();
+        setApiHealthy(res.status === 'healthy' && api.isBackendConnected());
       } catch {
         setApiHealthy(false);
       }
     };
-    const interval = setInterval(checkHealth, 15000);
+    const interval = setInterval(checkHealth, 8000);
     return () => clearInterval(interval);
   }, []);
 
@@ -352,22 +352,22 @@ export default function App() {
       <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6">
         {/* Backend Warning Banner if offline */}
         {!apiHealthy && (
-          <div className="mb-6 p-4 rounded-2xl bg-amber-500/10 border border-amber-500/20 text-amber-300 flex items-center justify-between">
+          <div className="mb-6 p-4 rounded-2xl bg-indigo-500/10 border border-indigo-500/20 text-indigo-300 flex items-center justify-between">
             <div className="flex items-center space-x-3">
-              <AlertCircle className="w-5 h-5 flex-shrink-0" />
+              <AlertCircle className="w-5 h-5 flex-shrink-0 text-indigo-400" />
               <div>
-                <p className="text-sm font-semibold">FastAPI backend starting or reconnecting...</p>
-                <p className="text-xs text-amber-400/80">
-                  SQLite database queries will automatically resume as soon as the service responds.
+                <p className="text-sm font-semibold">Local Storage Persistence Active</p>
+                <p className="text-xs text-indigo-300/80">
+                  All created tasks, notes, subtasks, and changes are safely saved in your browser and will synchronize when the FastAPI service connects.
                 </p>
               </div>
             </div>
             <button
               onClick={loadData}
-              className="px-3 py-1.5 rounded-xl bg-amber-500/20 hover:bg-amber-500/30 text-xs font-semibold border border-amber-500/30 transition flex items-center space-x-1"
+              className="px-3 py-1.5 rounded-xl bg-indigo-500/20 hover:bg-indigo-500/30 text-xs font-semibold border border-indigo-500/30 transition flex items-center space-x-1"
             >
               <RefreshCw className="w-3.5 h-3.5" />
-              <span>Retry</span>
+              <span>Sync Backend</span>
             </button>
           </div>
         )}
