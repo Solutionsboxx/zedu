@@ -1,0 +1,6 @@
+{
+  "name": "TaskFlow: To-Do & Notes with FastAPI",
+  "description": "A powerful full-stack task manager and rich note-taking workspace powered by Python FastAPI and SQLite.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
